@@ -1,0 +1,35 @@
+﻿@page "/stateservice"
+@inject Gyakorlas.Services.StateService StateService
+@implements IDisposable
+
+<ul>
+    @foreach (var m in StateService.GetMessage())
+    {
+        <li>@m</li>    
+    }
+</ul>
+
+
+<button class="btn btn-primary" @onclick="AddMessage">Üzenet hozzáadása</button>
+
+<h3>StateServiceShowPage</h3>
+
+@code {
+
+    private void AddMessage()
+    {
+        StateService.AddMessage($"Új üzenet éppne {DateTime.Now}");    
+    }
+
+    public void Dispose()
+    {
+        StateService.OnChange -= StateHasChanged;    
+    }
+
+    protected override void OnInitialized()
+    {
+        StateService.OnChange += () => InvokeAsync(StateHasChanged);
+    }
+
+
+}
