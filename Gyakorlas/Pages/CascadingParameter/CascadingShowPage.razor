@@ -1,0 +1,39 @@
+﻿@page "/cascading"
+
+<h3>CascadingShowPage</h3>
+
+<h2>Nem cascading elemek:</h2>
+<NocascadingParameter Parameter="@Value"></NocascadingParameter>
+<NocascadingParameter Parameter="@Value"></NocascadingParameter>
+
+<h2>Cascad-osított elemek :) </h2>
+<CascadingValue Value="@Value">
+    <WithCascade></WithCascade>
+    <WithCascade></WithCascade>
+</CascadingValue>
+
+<h2>Cascad-osított elemek + beégetett érték:) </h2>
+<CascadingValue Value="@Value" Name="Cuccli">
+    <WithCascadeAndName></WithCascadeAndName>
+    <WithCascadeAndName></WithCascadeAndName>
+</CascadingValue>
+
+<h2>Cascad-osított de fixé tett elemek:</h2>
+<CascadingValue Value="@Value" IsFixed="true">
+    <WithCascade></WithCascade>
+    <WithCascade></WithCascade>
+</CascadingValue>
+
+
+<button @onclick="UpdateValue">Értékek Frissítés/megosztása</button>
+
+@code {
+
+    string Value = "Üdv";
+
+    private void UpdateValue()
+    {
+        Value = "Üdv, kedves látogató!";    
+    }
+
+}

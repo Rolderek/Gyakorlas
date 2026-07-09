@@ -1,0 +1,86 @@
+﻿@page "/binding"
+
+<h3>BindingShowPage</h3>
+
+<div class="row">
+    <p>Ez nem frissít, mert nincs bekötve.</p>
+    <p>
+        <BindingValue Value="@bindingV1"></BindingValue> @bindingV1 <!--ez sajnos nem frissít semmit-->
+    </p>
+</div>
+<div class="row">
+    <p>Ez frissít de kezdő tagban megadott "binding"-al.</p>
+    <p>
+        <BindingValue @bind-value="@bindingV2"></BindingValue> @bindingV2 <!--ez direktbe frissíti-->
+    </p>
+</div>
+<div class="row">
+    <p>Ez frissít külön erre a célra írt fügvénnyel.</p>
+    <p>
+        <BindingValue Value="@bindingV3" ValueChanged="ValueChangedMethod"></BindingValue> @bindingV3 <!--ez metódussal frissíti-->
+    </p>
+</div>
+
+<!--második felvonás:-->
+
+<div>
+    <h4>Második felvonás</h4>
+
+    <p>Első szöveg:</p>
+    <input type="text" value="@TextValue1" /> @TextValue1
+    <br />
+    <p>Kettes szöveg:</p>
+    <input type="text" @bind="@TextValue2" /> @TextValue2
+    <br />
+    <p>Hármas szöveg:</p>
+    <input type="text" @bind-value="@TextValue3" /> @TextValue3
+    <br />
+    <p>Négyes szöveg 'bind-value:event="oninput"' figyeléssel: </p>
+    <input type="text" @bind-value="@TextValue4" @bind-value:event="oninput" /> @TextValue4
+    <br />
+    <p>Az ötöshöz van rendelve, de a '3. + After' szöveget írja ki.</p>
+    <input type="text"
+           @bind-value="@TextValue5"
+           @bind-value:after='() => { TextValue5 = TextValue3 + " After"; }' /> @TextValue5
+    <br />
+    <p>A négyest változtatja.</p>
+    <input type="text" @bind-value:set="@((newvalue) => TextValue4 = newvalue)" @bind-value:get="TextValue4" />@TextValue4
+
+</div>
+
+<p>Az első szöveget változtatja csak odafelé</p>
+<InputText @bind-Value="@TextValue1">1</InputText>
+<br />
+<br />
+<!--harmad íziglen:-->
+
+<div class="row">
+    <ListItem TItem="string" Items="data"/> <!--Egy xtípusú elemeket tartalmazó lista, ami most string lista-->
+    <ListItem Items="@masikData"/> <!--A típus elhagyható mivel IEnumerable a befoglaló osztrály idetartozó adattagja-->
+</div>
+
+@code {
+
+        string bindingV1 = "Before update";
+        string bindingV2 = "Before update";
+        string bindingV3 = "Before update";
+
+    private void ValueChangedMethod(string value)
+    {
+        bindingV3 = value;
+    }
+    
+    //második felvonáshoz:
+    string TextValue1 = "VariableTest";
+    string TextValue2 = "";
+    string TextValue3 = "";
+    string TextValue4 = "";
+    string TextValue5 = "";
+
+    //harmadíziglen:
+    private List<string> data = new() { "alma", "babán", "körte" };
+    private List<int> masikData = new() { 9,8,7,6,5,4,3,2,1,0 };
+    
+
+
+}

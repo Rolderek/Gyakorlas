@@ -1,0 +1,20 @@
+﻿<!--ez a típus paraméter-->
+@typeparam TItem
+
+@if (Items != null)
+{
+    foreach (var item in Items)
+    {
+        <div>
+            @item?.ToString()
+        </div>    
+    }
+}
+
+@code {
+
+    //ez itt:
+    [Parameter]
+    public IEnumerable<TItem>? Items { get; set; }
+
+}
