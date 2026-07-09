@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Gyakorlas.Pages.Notification
 {
@@ -13,7 +14,6 @@ namespace Gyakorlas.Pages.Notification
         [Required]
         public TodoItemState State { get; set; }
 
-        public ICollection<Category> Categories { get; set; }
-
+        public ICollection<Category> Categories { get; set; } = new List<Category>();
     }
 }
