@@ -26,13 +26,24 @@ namespace Gyakorlas.Pages.Notification
             }
         }
 
-        private void OnMessageReceived(object? sender, BroadcastChannelMessageEventArgs e)
+        private void OnMessageReceived(object? sender, BroadcastChannelMessageEventArgs e) //átalakított verzió
         {
             if (e.Data != null)
             {
-                if (e.Data is JsonElement jsonElement)
+                if (e.Data is JsonDocument jsonDoc)
                 {
-                    var message = jsonElement.GetString();
+                    JsonElement root = jsonDoc.RootElement;
+                    string? message = null;
+
+                    if (root.ValueKind == JsonValueKind.String)
+                    {
+                        message = root.GetString();
+                    }
+                    else
+                    {
+                        message = root.GetRawText();
+                    }
+
                     if (message != null)
                     {
                         OnNotificationReceived?.Invoke(message);
