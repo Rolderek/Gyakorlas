@@ -3,7 +3,8 @@
 @implements IDisposable
 
 <ul>
-    @foreach (var m in StateService.GetMessage())
+    @* @foreach (var m in StateService.GetMessage()) *@
+    @foreach (var m in messages3)
     {
         <li>@m</li>    
     }
@@ -16,19 +17,22 @@
 
 @code {
 
+    List<string> messages3 = new List<string>();
+
     private void AddMessage()
     {
-        StateService.AddMessage($"Új üzenet éppen ebben az időpontban: ]| {DateTime.Now} |[");    
+        //StateService.AddMessage($"Új üzenet éppen ebben az időpontban: ]| {DateTime.Now} |[");    
+        messages3.Add($"Új üzenet éppen ebben az időpontban: ]| {DateTime.Now} |[");
     }
 
     public void Dispose()
     {
-        StateService.OnChange -= StateHasChanged;    
+        //StateService.OnChange -= StateHasChanged;    
     }
 
     protected override void OnInitialized()
     {
-        StateService.OnChange += () => InvokeAsync(StateHasChanged);
+        //StateService.OnChange += () => InvokeAsync(StateHasChanged);
     }
 
 

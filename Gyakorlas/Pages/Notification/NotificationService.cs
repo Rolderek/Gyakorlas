@@ -21,6 +21,7 @@ namespace Gyakorlas.Pages.Notification
         {
             if (_channel == null)
             {
+                
                 _channel = await _broadcastChannelService.CreateOrJoinAsync("notification_channel");
                 _channel.Message += OnMessageReceived;
             }

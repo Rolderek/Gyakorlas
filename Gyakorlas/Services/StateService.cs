@@ -3,6 +3,7 @@
     public class StateService
     {
         private List<string> messages = new List<string>();
+        public List<string> messages2 = new List<string>();
 
         public event Action OnChange;
 
