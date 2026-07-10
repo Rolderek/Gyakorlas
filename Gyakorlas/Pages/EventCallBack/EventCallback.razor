@@ -3,15 +3,15 @@
 
 <PageTitle>Event Callback Demo</PageTitle>
 <!--stílus netről szedve-->
-<div class="container mt-4" style="max-width: 600px;">
+<div class="container mt-4" style="max-width: 850;">
     <div class="card shadow-sm border-0 rounded-3 p-4 bg-light">
         <h3 class="mb-4 text-primary fw-bold">Event Callback Demo Playground</h3>
 
-        <div class="d-flex flex-wrap gap-2 mb-4">
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-4">
             <button class="btn btn-outline-primary" @onclick="@Clicked">1. Sync Click</button>
             <button class="btn btn-outline-success" @onclick="@ClickedAsync">2. Async Click</button>
             <button class="btn btn-outline-warning" @onclick="@(async () => { 
-                        Clicked(); await ClickedAsync(); LogAction("Combined Method Lambda Executed!"); })">
+                        Clicked(); await ClickedAsync(); LogAction("Lambda metódus végrwhajtva."); })">
                 3. Combined Lambda
             </button>
             <button class="btn btn-outline-danger" @onclick="@ClickWithArgs">4. With Mouse Args</button>
@@ -23,10 +23,10 @@
                 <button class="btn btn-sm btn-outline-secondary text-white-50 border-0 py-0" @onclick="ClearLogs">Clear</button>
             </div>
 
-            <div style="height: 150px; overflow-y: auto; font-family: monospace; font-size: 0.9rem;">
+            <div style="height: 650px; overflow-y: auto; font-family: monospace; font-size: 0.9rem;">
                 @if (!logs.Any())
                 {
-                    <span class="text-muted italic">Click any button above to trace execution...</span>
+                    <span class="text-muted italic">Megnyomsz végre valamit?!</span>
                 }
                 else
                 {
@@ -40,6 +40,7 @@
     </div>
 </div>
 
+
 @code {
     private List<string> logs = new();
 
@@ -52,19 +53,19 @@
 
     void Clicked()
     {
-        LogAction("Sync Clicked() method finished running.");
+        LogAction("Sync Clicked() a funkció/metódus befejeződött.");
     }
 
     async Task ClickedAsync()
     {
-        LogAction("Async ClickedAsync() starting delay simulation...");
+        LogAction("Async ClickedAsync() várakozási idő hozzáadva...");
         await Task.Delay(500); //várjál kicsikét mééég...
-        LogAction("Async ClickedAsync() task successfully completed.");
+        LogAction("Async ClickedAsync() várakozási idő lejárt.");
     }
 
     void ClickWithArgs(MouseEventArgs args)
     {
-        LogAction($"MouseArgs caught! Cursor Screen Position -> X: {args.ScreenX}, Y: {args.ScreenY}");
-        LogAction($"Modifier keys pressed? Ctrl: {args.CtrlKey}, Shift: {args.ShiftKey}");
+        LogAction($"MouseArgs elkapva! Cursor Screen Position -> X: {args.ScreenX}, Y: {args.ScreenY}");
+        LogAction($"Modifier gomb megnyomódott? Ctrl: {args.CtrlKey}, Shift: {args.ShiftKey}");
     }
 }
