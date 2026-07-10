@@ -1,0 +1,63 @@
+﻿@page "/todo-notifications"
+@using Gyakorlas.Pages.Notification
+@inject NotificationService NotifService
+@implements IDisposable
+
+<h3>Értesítések tesztelése</h3>
+
+<button @onclick="SendTest">Értesítés küldése mindenkinek</button>
+
+<p>Legutóbbi üzenet: @lastMessage</p>
+
+@code {
+
+    private string lastMessage = "Még nem érkezett üzenet.";
+
+    protected override async Task OnInitializedAsync()
+    {
+        NotifService.OnNotificationReceived += HandleNotification;
+        await NotifService.InitializeAsync();
+    }
+
+    private void HandleNotification(string message)
+    {
+        lastMessage = message;
+        //StateHasChanged(); //ez lassú
+        InvokeAsync(StateHasChanged); //ez azonalli
+    }
+
+    private async Task SendTest()
+    {
+        await NotifService.SendNotificationAsync("Tsá! Ez egy teszt üzenet.");
+    }
+
+    public void Dispose()
+    {
+        NotifService.OnNotificationReceived -= HandleNotification;
+    }
+
+    /*
+    private string lastMessage = "Még nem érkezett üzenet.";
+
+    protected override void OnInitialized()
+    {
+        NotifService.OnNotificationReceived += HandleNotification;
+    }
+
+    private void HandleNotification(string message)
+    {
+        lastMessage = message;
+        StateHasChanged();
+    }
+
+    private void SendTest()
+    {
+        NotifService.SendNotification("Tsá! Ez egy teszt üzenet.");
+    }
+
+    public void Dispose()
+    {
+        NotifService.OnNotificationReceived -= HandleNotification;
+    }
+    */
+}
