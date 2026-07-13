@@ -2,6 +2,8 @@
 @inject Gyakorlas.Services.StateService StateService
 @implements IDisposable
 
+<!--dióhélyban a private visibility miatt nem fér hozzá a listához csak az aki hozzáfér a service-hez.->
+
 <ul>
     @* @foreach (var m in StateService.GetMessage()) *@
     @foreach (var m in messages3)
